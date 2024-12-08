@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "build/index.js",
   "scripts": {
-    "start": "tsx src/server/index.ts && node --env-file .env index.js",
+    "start": "tsx dist/server/index.js",
     "dev": "tsx watch src/server/index.ts",
     "biome": "npx biome check --fix --unsafe",
     "build": "tsup src"
