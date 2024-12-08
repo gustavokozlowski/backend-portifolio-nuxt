@@ -1,0 +1,31 @@
+{
+  "name": "backend-portifolio-nuxt",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "tsx src/server/index.ts && node --env-file .env index.js",
+    "dev": "tsx watch src/server/index.ts",
+    "build": "tsup src"
+  },
+  "type": "module",
+  "exports": {
+    "./biome": "./biome.json"
+  },
+  "keywords": [],
+  "author": "gustavo kozlowski",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "express": "^4.21.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "env-var": "^7.5.0"
+  }
+}
