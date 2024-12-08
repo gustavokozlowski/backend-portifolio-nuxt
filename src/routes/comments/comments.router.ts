@@ -1,4 +1,4 @@
-import { Router, type Response } from 'express';
+import { type Response, Router } from 'express';
 const commentsRouter = Router();
 
 commentsRouter.get('/', (response: Response) => {
