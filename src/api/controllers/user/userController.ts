@@ -1,9 +1,10 @@
 import type { Request, Response } from 'express';
 import { db } from '../../services/firebase/firebase.config.js';
-import type { GetAllResponse, User } from './types.js';
+import type { User } from './types.js';
+
+const snap = await db.collection('users').get();
 
 export const getAll = async (_req: Request, res: Response) => {
-  const snap = await db.collection('users').get();
   const arr: User[] = [];
   // biome-ignore lint/complexity/noForEach: <explanation>
   snap.forEach((doc) => {
