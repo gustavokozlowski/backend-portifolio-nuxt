@@ -1,5 +1,5 @@
+import type { Request, Response } from 'express';
 import { db } from '../../services/firebase/firebase.config.js';
-import type { Response, Request } from 'express';
 import type { User } from './types.js';
 
 export const getAll = async (_req: Request, res: Response) => {
