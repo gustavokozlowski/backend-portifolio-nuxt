@@ -1,4 +1,5 @@
 export interface User {
+  id: string;
   name: string;
   label: string;
   comment: string;
