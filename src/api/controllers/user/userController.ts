@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import { db } from '../../services/firebase/firebase.config.js';
-import type { User } from './types.js';
+import type { GetAllResponse, User } from './types.js';
 
 export const getAll = async (_req: Request, res: Response) => {
   const snap = await db.collection('users').get();

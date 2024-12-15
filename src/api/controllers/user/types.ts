@@ -3,3 +3,8 @@ export interface User {
   label: string;
   comment: string;
 }
+
+export interface GetAllResponse {
+  status: string;
+  data: User[];
+}
