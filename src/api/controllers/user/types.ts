@@ -1,8 +1,8 @@
 export interface User {
   id: string;
   name: string;
+  email: string;
   label: string;
-  comment: string;
 }
 
 export interface GetAllResponse {
