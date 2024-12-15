@@ -16,3 +16,15 @@ export const getAll = async (_req: Request, res: Response) => {
     data: [...arr],
   });
 };
+
+export const getUser = async (req: Request, res: Response) => {
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  const user = snap.forEach((doc) => {
+    if (doc.id === req.params.id) return doc.data();
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: user,
+  });
+};
