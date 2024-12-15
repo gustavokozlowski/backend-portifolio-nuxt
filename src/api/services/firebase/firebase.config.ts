@@ -7,4 +7,4 @@ const admin = initializeApp({
 
 const db = getFirestore();
 
-export { admin, db };
+export { db };
