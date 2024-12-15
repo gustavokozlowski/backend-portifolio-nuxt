@@ -1,17 +1,16 @@
 import cors from 'cors';
 import express from 'express';
 import 'dotenv/config';
-import admin from '../firebase/firebase.config.js';
+import * as userController from '../controllers/user/userController.js';
 
+const PORT = process.env.PORT;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-// const credential = await admin.auth().app.options.credential?.getAccessToken()
-//develop
-app.listen(process.env.PORT, () => {
-  console.log(
-    `Server rondando liso na porta ${process.env.PORT}\n Admin: ${admin}`
-  );
+app.get('/api/v1/user', userController.getAll);
+
+app.listen(PORT, () => {
+  console.log(`Server rondando liso na porta ${PORT}\n`);
 });
