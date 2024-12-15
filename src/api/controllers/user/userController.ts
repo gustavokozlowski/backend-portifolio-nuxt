@@ -1,4 +1,4 @@
-import { db } from '../../firebase/firebase.config.js';
+import { db } from '../../services/firebase/firebase.config.js';
 import type { Response, Request } from 'express';
 import type { User } from './types.js';
 
