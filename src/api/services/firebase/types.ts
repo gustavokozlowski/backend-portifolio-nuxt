@@ -1,4 +1,4 @@
-export interface AuthCreateUserRequest {
+export interface IAuthCreateUserParams {
   email: string;
   phoneNumber: string;
   password: string;
