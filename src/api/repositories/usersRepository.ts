@@ -7,8 +7,8 @@ import type {
   FirebaseFirestore,
 } from '@firebase/firestore-types';
 
-const collectionDB = await db.collection('users').get();
-const arr: User[] = [];
+const collectionDB = db.collection('users');
+const users: FirebaseFirestore.DocumentData[] = [];
 
 export async function getUserById(
   id: string
@@ -24,4 +24,26 @@ export async function getUserById(
   }
 }
 
+export async function getAllUsers(): Promise<DocumentData[] | undefined> {
+  try {
+    const usersDB = await collectionDB.get();
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    usersDB.forEach((doc) => {
+      return users.push(doc.data());
+    });
+    // console.info(dataUsers);
+    // console.info(users);
+    return users;
+  } catch (error) {
+    console.info(error);
+    return undefined;
+  }
+}
 
+// EXEMPLO DE COMO INSERIR DADOS NO FIRESTORE
+// const citiesRef = db.collection('cities');
+
+// await citiesRef.doc('SF').set({
+//   name: 'San Francisco', state: 'CA', country: 'USA',
+//   capital: false, population: 860000
+// });
