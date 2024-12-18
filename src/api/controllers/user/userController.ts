@@ -1,38 +1,51 @@
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import type { AuthCreateUserRequest } from '../../services/firebase/types.js';
 import type { User } from './types.js';
 import { db } from '../../services/firebase/firebase.config.js';
 import { Admin } from '../../services/firebase/auth.services.js';
-import { getUserById } from '../../repositories/usersRepository.js';
+import {
+  getUserById,
+  getAllUsers,
+} from '../../repositories/usersRepository.js';
 
-const snap = await db.collection('users').get();
+export const getAll = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const users = await getAllUsers();
 
-export const getAll = async (_req: Request, res: Response) => {
-  const arr: User[] = [];
-  // biome-ignore lint/complexity/noForEach: <explanation>
-  snap.forEach((doc) => {
-    return arr.push(doc.data() as User);
-  });
+  if (users === undefined) {
+    res.status(400).json({
+      status: 'erro: usuário não encontrado',
+    });
+    return next();
+  }
 
   res.status(200).json({
     status: 'success',
-    data: [...arr],
+    data: users,
   });
+
+  return next();
 };
 
 export const getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const doc = await getUserById(id);
+  const user = await getUserById(id);
 
-  if (doc !== undefined) {
-    res.status(200).json({
-      status: 'success',
-      data: doc,
-    });
+  if (user === undefined) {
+    res
+      .status(400)
+      .json({
+        status: 'erro: usuário não encontrado',
+      })
+      .end();
   }
 
-  res.status(400).json({
-    status: 'erro: usuário não encontrado'
+  res.status(200).json({
+    status: 'success',
+    data: user,
   });
 };
 
