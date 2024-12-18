@@ -1,5 +1,5 @@
-import type { AuthCreateUserRequest } from '../services/firebase/types.js';
-import type { User } from '../controllers/user/types.js';
+import type { IAuthCreateUserParams } from '../services/firebase/types.js';
+import type { IUser } from '../controllers/user/types.js';
 import { db } from '../services/firebase/firebase.config.js';
 import { Admin } from '../services/firebase/auth.services.js';
 import type {
@@ -31,8 +31,7 @@ export async function getAllUsers(): Promise<DocumentData[] | undefined> {
     usersDB.forEach((doc) => {
       return users.push(doc.data());
     });
-    // console.info(dataUsers);
-    // console.info(users);
+ 
     return users;
   } catch (error) {
     console.info(error);
@@ -41,6 +40,24 @@ export async function getAllUsers(): Promise<DocumentData[] | undefined> {
 }
 
 // EXEMPLO DE COMO INSERIR DADOS NO FIRESTORE
+
+//PARAMOS NESSA PARTE DE COMO AJEITAR OS PARAMETROS PARA SE ADEQUAR A TODES!
+export async function createUserInDb(
+  params: IAuthCreateUserParams
+): Promise<IUser> {
+  const admin = new Admin();
+  const user = await admin.createUser(params);
+
+  const newUser: IUser = {
+    id: user.uid,
+    email: user.email as string,
+    name: user.displayName as string,
+  };
+
+  await db.collection('users').doc(user.uid).set(newUser);
+
+  return newUser;
+}
 // const citiesRef = db.collection('cities');
 
 // await citiesRef.doc('SF').set({
