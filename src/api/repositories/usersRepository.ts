@@ -46,6 +46,8 @@ export async function createUserInDb(
   params: IAuthCreateUserParams
 ): Promise<IUser> {
   const admin = new Admin();
+
+  //REFATORAR PARA UMA FUNCAO CHAMADA AUTHCREATEUSERACCOUNT
   const user = await admin.createUser(params);
 
   const newUser: IUser = {
