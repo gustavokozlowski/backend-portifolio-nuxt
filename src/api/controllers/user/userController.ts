@@ -3,6 +3,7 @@ import type { AuthCreateUserRequest } from '../../services/firebase/types.js';
 import type { User } from './types.js';
 import { db } from '../../services/firebase/firebase.config.js';
 import { Admin } from '../../services/firebase/auth.services.js';
+import { getUserById } from '../../repositories/usersRepository.js';
 
 const snap = await db.collection('users').get();
 
@@ -20,18 +21,22 @@ export const getAll = async (_req: Request, res: Response) => {
 };
 
 export const getUser = async (req: Request, res: Response) => {
-  // biome-ignore lint/complexity/noForEach: <explanation>
-  const user = snap.forEach((doc) => {
-    if (doc.id === req.params.id) return doc.data();
-  });
+  const { id } = req.params;
+  const doc = await getUserById(id);
 
-  res.status(200).json({
-    status: 'success',
-    data: user,
+  if (doc !== undefined) {
+    res.status(200).json({
+      status: 'success',
+      data: doc,
+    });
+  }
+
+  res.status(400).json({
+    status: 'erro: usuário não encontrado'
   });
 };
 
-export const addUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const admin = new Admin();
     const params: AuthCreateUserRequest = {
